@@ -267,7 +267,7 @@ button {
   display: flex;
   align-items: center;
   font-weight: 800;
-  font-size: clamp(20px, 2.2vw, 26px);
+  font-size: clamp(18px, 4vw, 26px);
   letter-spacing: -0.5px;
   background: linear-gradient(135deg, var(--text-title-1) 30%, var(--text-title-2));
   background-clip: text;
@@ -328,6 +328,7 @@ button {
   border: 2px solid var(--line);
   border-radius: 50%;
   transition: border-color 0.2s ease, transform 0.2s ease;
+  flex-shrink: 0;
 }
 
 #btnProfile:hover {
@@ -368,15 +369,14 @@ button {
   align-items: center;
 }
 
-
 .options-overlay {
   position: fixed;
-  top: 70px;
+  top: 0;
   left: 0;
   width: 100vw;
-  height: calc(100vh - 70px);
-  background: rgba(0, 0, 0, 0.4);
-  backdrop-filter: blur(1px);
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(2px);
   z-index: 140;
   opacity: 0;
   pointer-events: none;
@@ -390,17 +390,17 @@ button {
 
 .ct-options-drawer {
   position: fixed;
-  top: 70px;
+  top: 0;
   left: 0;
-  width: 190px;
-  height: calc(100vh - 70px);
+  width: 220px;
+  height: 100vh;
   background: var(--panel);
   border-right: 1px solid var(--line);
   box-shadow: var(--shadow);
   display: flex;
   flex-direction: column;
   gap: 6px;
-  padding: 12px 8px;
+  padding: 16px 12px;
   z-index: 150;
   transform: translateX(-100%);
   transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -414,13 +414,13 @@ button {
 .drawer-header {
   display: flex;
   align-items: center;
-  padding: 0 8px 8px 0;
+  padding: 0 0 12px 0;
   font-weight: 700;
-  font-size: 14px;
+  font-size: 15px;
   color: var(--mute);
   border-bottom: 1px solid var(--line);
-  margin-bottom: 4px;
-  gap: 4px;
+  margin-bottom: 6px;
+  gap: 8px;
 }
 
 .drawer-close-btn {
@@ -463,11 +463,11 @@ button {
 .opt {
   background: transparent;
   border-radius: var(--radius-sm);
-  padding: 8px 12px;
+  padding: 10px 12px;
   text-align: left;
   color: var(--mute);
   font-weight: 500;
-  font-size: 13px;
+  font-size: 14px;
   white-space: nowrap;
   width: 100%;
   display: flex;
@@ -534,20 +534,22 @@ button {
 .ct-b-m-top {
   display: flex;
   flex-direction: row;
-  height: 100px;
+  min-height: 80px;
   width: 100%;
-  align-items: end;
-  padding: 0 24px 10px 32px;
+  align-items: center;
+  padding: 12px 24px;
   border-bottom: 1px solid var(--line);
   background: color-mix(in srgb, var(--panel2) var(--top-alpha), transparent);
   gap: 12px;
+  flex-wrap: wrap;
 }
 
 .ct-top-title {
-  font-size: 52px;
+  font-size: clamp(28px, 5vw, 52px);
   font-weight: 800;
   letter-spacing: -0.3px;
   color: var(--text);
+  word-break: break-word;
 }
 
 .ct-top-title[contenteditable="true"] {
@@ -562,19 +564,16 @@ button {
   min-width: 26px;
   font-size: 10px;
   align-self: center;
-  margin-bottom: 6px;
 }
 
 .btn-demon-edit.btn-title-edit {
   opacity: 1;
   visibility: visible;
-  align-self: end;
   height: 28px;
   width: 28px;
   font-size: smaller;
   background-color: transparent;
   border: none;
-  margin-bottom: 8px;
 }
 
 .btn-demon-edit.btn-title-edit:hover {
@@ -582,7 +581,7 @@ button {
 }
 
 #btnModeList, #btnFilter {
-  height: 32px;
+  height: 36px;
   padding: 0 14px;
   background: var(--btn);
   border: 1px solid var(--border);
@@ -593,6 +592,7 @@ button {
   align-items: center;
   gap: 6px;
   color: var(--text-pri);
+  white-space: nowrap;
 }
 
 #btnModeList:hover, #btnFilter:hover {
@@ -628,7 +628,7 @@ button {
   display: flex;
   flex-direction: row;
   align-items: center;
-  height: 160px;
+  min-height: 140px;
   width: 100%;
   max-width: 720px;
   flex-shrink: 0;
@@ -646,14 +646,15 @@ button {
               border-color 0.2s ease;
   position: relative;
   animation: alignStep 0.3s ease-out;
+  touch-action: manipulation;
 }
 
 .demon-step-fav {
   position: absolute;
-  top: 12px;
-  right: 22px;
-  width: 22px;
-  height: 22px;
+  top: 10px;
+  right: 14px;
+  width: 20px;
+  height: 20px;
   object-fit: contain;
   pointer-events: none;
   z-index: 5;
@@ -674,7 +675,6 @@ button {
   transform: translateY(-2px);
   box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
   border-color: var(--line);
-  scale: 1.02;
 }
 
 .demon-step.drag {
@@ -688,8 +688,8 @@ button {
 
 .demon-step-image {
   object-fit: cover;
-  height: 120px;
-  width: 120px;
+  height: 110px;
+  width: 110px;
   border-radius: var(--radius-sm);
   background: color-mix(in srgb, var(--panel3) 60%, transparent);
   border: 1px solid var(--line);
@@ -697,8 +697,8 @@ button {
 }
 
 .demon-step-image.has-video {
-  height: 128px;
-  width: 228px;
+  height: 110px;
+  width: 180px;
   transition: all 0.2s ease;
 }
 
@@ -718,11 +718,11 @@ button {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  gap: 4px;
+  gap: 6px;
 }
 
 .demon-step-title {
-  font-size: 22px;
+  font-size: 20px;
   font-weight: 700;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -766,8 +766,8 @@ button {
 
 .btn-demon-add, .btn-demon-edit {
   opacity: 0;
-  height: 32px;
-  width: 32px;
+  height: 34px;
+  width: 34px;
   background: var(--panel3);
   border: 1px solid var(--line);
   border-radius: var(--radius-sm);
@@ -790,6 +790,14 @@ button {
 .demon-step:hover .btn-demon-edit {
   visibility: visible;
   opacity: 1;
+}
+
+/* En dispositivos táctiles/móviles, mantener siempre visibles los botones de edición */
+@media (hover: none) and (pointer: coarse) {
+  .btn-demon-add, .btn-demon-edit {
+    opacity: 1;
+    visibility: visible;
+  }
 }
 
 /* =========================================================
@@ -925,6 +933,7 @@ button {
   display: none;
   flex-direction: column;
   min-width: 180px;
+  max-width: 90vw;
   z-index: 160;
   background: var(--panel);
   border: 1px solid var(--line);
@@ -960,6 +969,8 @@ button {
 
 .pop-config {
   min-width: 230px;
+  max-height: 80vh;
+  overflow-y: auto;
 }
 
 .pop-config .pop-title {
@@ -1023,7 +1034,7 @@ button {
   display: none;
   align-items: center;
   justify-content: center;
-  background: rgba(0, 0, 0, 0.7);
+  background: rgba(0, 0, 0, 0.75);
   backdrop-filter: blur(4px);
   z-index: 200;
   padding: 16px;
@@ -1040,7 +1051,7 @@ button {
 .box {
   width: 480px;
   max-width: 100%;
-  max-height: 90vh;
+  max-height: 88vh;
   overflow-y: auto;
   background: var(--panel);
   border: 1px solid var(--line);
@@ -1052,24 +1063,24 @@ button {
 }
 
 .box h3 {
-  padding: 18px 24px;
+  padding: 16px 20px;
   border-bottom: 1px solid var(--line);
-  font-size: 18px;
+  font-size: 17px;
   font-weight: 700;
 }
 
 .box-body {
-  padding: 16px 24px;
+  padding: 16px 20px;
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 14px;
 }
 
 .box-foot {
   display: flex;
   justify-content: flex-end;
   gap: 10px;
-  padding: 16px 24px;
+  padding: 14px 20px;
   border-top: 1px solid var(--line);
   background: var(--panel2);
   border-radius: 0 0 var(--radius-lg) var(--radius-lg);
@@ -1077,7 +1088,7 @@ button {
 
 .box-foot button {
   color: var(--mute);
-  padding: 7px 20px;
+  padding: 8px 18px;
   background: transparent;
   border: 1px solid var(--line);
   border-radius: var(--radius-sm);
@@ -1132,7 +1143,7 @@ button {
   border: 1px solid var(--line);
   border-radius: var(--radius-sm);
   color: var(--text);
-  font-size: 13.5px;
+  font-size: 14px;
 }
 
 .box input:focus, .box textarea:focus {
@@ -1164,8 +1175,9 @@ button {
   border: 1px solid var(--line);
   border-radius: var(--radius-sm);
   cursor: pointer;
-  height: 36px;
-  width: 36px;
+  height: 38px;
+  width: 38px;
+  flex-shrink: 0;
 }
 
 .btn-fav-toggle:hover {
@@ -1173,18 +1185,18 @@ button {
 }
 
 .btn-fav-toggle img {
-  width: 26px;
-  height: 26px;
+  width: 24px;
+  height: 24px;
   object-fit: contain;
 }
 
 .chips-diff-row {
   display: flex;
   flex-direction: row-reverse;
-  gap: 8px;
+  gap: 6px;
   align-items: center;
   justify-content: space-between;
-  height: 64px;
+  min-height: 54px;
 }
 
 .chips-diff-row button {
@@ -1196,9 +1208,10 @@ button {
   align-items: center;
   justify-content: center;
   transition: all 0.2s ease;
-  height: 64px;
-  width: 64px;
+  height: 52px;
+  width: 100%;
   flex: 1;
+  padding: 4px;
 }
 
 .chips-diff-row button:hover {
@@ -1209,13 +1222,13 @@ button {
 .chips-diff-row button.sel {
   border-color: var(--dc, var(--acc));
   background: var(--panel2);
-  transform: scale(1.08);
+  transform: scale(1.05);
   box-shadow: 0 0 10px var(--dc, var(--acc));
 }
 
 .chips-diff-row button img {
-  width: 62px;
-  height: 62px;
+  max-width: 100%;
+  max-height: 100%;
   object-fit: contain;
 }
 
@@ -1244,7 +1257,7 @@ button {
 }
 
 .autocomplete-item {
-  padding: 8px 12px;
+  padding: 10px 12px;
   cursor: pointer;
   display: flex;
   justify-content: space-between;
@@ -1301,7 +1314,7 @@ button {
 .chips-theme button {
   padding: 0;
   height: 22px;
-  width: 46px;
+  width: 100%;
   border: 1px solid var(--line);
   border-radius: var(--radius-sm);
   cursor: pointer;
@@ -1321,37 +1334,15 @@ button {
   transform: scale(1.05);
 }
 
-/* Blue themes */
-.chips-theme button[data-t="dark-blue"] {
-  background: linear-gradient(90deg, #1e1e24 50%, #3b82f6 50%);
-}
-.chips-theme button[data-t="light-blue"] {
-  background: linear-gradient(90deg, #f3f4f6 50%, #3b82f6 50%);
-}
-
-/* Pink themes */
-.chips-theme button[data-t="dark-pink"] {
-  background: linear-gradient(90deg, #1e1e24 50%, #ec4899 50%);
-}
-.chips-theme button[data-t="light-pink"] {
-  background: linear-gradient(90deg, #f3f4f6 50%, #ec4899 50%);
-}
-
-/* White and black themes */
-.chips-theme button[data-t="dark-white"] {
-  background: linear-gradient(90deg, #1e1e24 50%, #ffffff 50%);
-}
-.chips-theme button[data-t="light-black"] {
-  background: linear-gradient(90deg, #f3f4f6 50%, #111827 50%);
-}
-
-/* OLED themes (pure black) */
-.chips-theme button[data-t="oled-blue"] {
-  background: linear-gradient(90deg, #000000 50%, #2563eb 50%);
-}
-.chips-theme button[data-t="oled-pink"] {
-  background: linear-gradient(90deg, #000000 50%, #db2777 50%);
-}
+/* Themes colors */
+.chips-theme button[data-t="dark-blue"] { background: linear-gradient(90deg, #1e1e24 50%, #3b82f6 50%); }
+.chips-theme button[data-t="light-blue"] { background: linear-gradient(90deg, #f3f4f6 50%, #3b82f6 50%); }
+.chips-theme button[data-t="dark-pink"] { background: linear-gradient(90deg, #1e1e24 50%, #ec4899 50%); }
+.chips-theme button[data-t="light-pink"] { background: linear-gradient(90deg, #f3f4f6 50%, #ec4899 50%); }
+.chips-theme button[data-t="dark-white"] { background: linear-gradient(90deg, #1e1e24 50%, #ffffff 50%); }
+.chips-theme button[data-t="light-black"] { background: linear-gradient(90deg, #f3f4f6 50%, #111827 50%); }
+.chips-theme button[data-t="oled-blue"] { background: linear-gradient(90deg, #000000 50%, #2563eb 50%); }
+.chips-theme button[data-t="oled-pink"] { background: linear-gradient(90deg, #000000 50%, #db2777 50%); }
 
 .avatar-row {
   display: flex;
@@ -1360,8 +1351,8 @@ button {
 }
 
 .avatar-preview-container {
-  width: 80px;
-  height: 80px;
+  width: 76px;
+  height: 76px;
   border-radius: var(--radius-md);
   overflow: hidden;
   border: 2px solid var(--line);
@@ -1389,7 +1380,7 @@ button {
   font-size: 12.5px;
   font-weight: 600;
   background: var(--panel2);
-  max-width: 96px;
+  max-width: 110px;
 }
 
 .avatar-controls button:hover {
@@ -1406,8 +1397,8 @@ button {
   position: fixed;
   bottom: 16px;
   left: 16px;
-  width: 42px;
-  height: 42px;
+  width: 44px;
+  height: 44px;
   border-radius: 50%;
   background: rgba(24, 25, 34, 0.9);
   border: 1px solid rgba(255, 255, 255, 0.2);
@@ -1433,8 +1424,8 @@ button {
   position: fixed;
   bottom: 16px;
   right: 16px;
-  width: 42px;
-  height: 42px;
+  width: 44px;
+  height: 44px;
   border-radius: 50%;
   background: rgba(24, 25, 34, 0.9);
   border: 1px solid rgba(255, 255, 255, 0.2);
@@ -1457,15 +1448,15 @@ button {
 }
 
 .fab-bottom-right.pushed {
-  bottom: 68px;
+  bottom: 70px;
 }
 
 .fab-scroll-top {
   position: fixed;
   bottom: 16px;
   right: 16px;
-  width: 42px;
-  height: 42px;
+  width: 44px;
+  height: 44px;
   border-radius: 50%;
   background: rgba(24, 25, 34, 0.9);
   border: 1px solid rgba(255, 255, 255, 0.2);
@@ -1511,6 +1502,7 @@ button {
   z-index: 2000;
   opacity: 0;
   transition: opacity 0.2s ease;
+  padding: 16px;
 }
 
 .box-floating-modal.open {
@@ -1522,8 +1514,8 @@ button {
   background: #181922;
   border: 1px solid rgba(255, 255, 255, 0.15);
   border-radius: 12px;
-  padding: 24px;
-  width: 90%;
+  padding: 20px;
+  width: 100%;
   max-width: 420px;
   color: #ffffff;
   position: relative;
@@ -1570,10 +1562,11 @@ button {
 
 .floating-modal-title {
   margin: 0 0 12px 0;
-  font-size: 1.15rem;
+  font-size: 1.1rem;
   color: #ffffff;
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   padding-bottom: 8px;
+  padding-right: 24px;
 }
 
 .floating-modal-title span {
@@ -1587,12 +1580,12 @@ button {
 }
 
 .ig {
-    color: var(--text);
-    text-decoration: none;
+  color: var(--mute);
+  text-decoration: none;
 }
 
 .ig:hover {
-    text-decoration: none;
+  text-decoration: none;
 }
 
 .empty {
@@ -1618,20 +1611,25 @@ button {
 }
 
 /* =========================================================
-   BLOCK 7: Responsiveness (Mobile)
+   BLOCK 7: Responsiveness (Mobile & Tablet)
    ========================================================= */
 @media (max-width: 900px) {
-  body {
-    overflow-x: hidden;
-    overflow-y: auto;
-    height: auto;
+  .head-container {
+    padding: 0 16px;
+    height: 60px;
   }
+  
+  .ct-h-version {
+    display: none;
+  }
+
   .main-container {
     flex-direction: column;
   }
+
   .ct-options {
     position: sticky;
-    top: 70px;
+    top: 60px;
     width: 100% !important;
     height: 48px;
     flex-direction: row;
@@ -1639,25 +1637,146 @@ button {
     align-items: center;
     z-index: 80;
     padding: 4px 12px !important;
+    border-right: none;
+    border-bottom: 1px solid var(--line);
   }
+
+  .options-overlay {
+    top: 0;
+    height: 100vh;
+  }
+
+  .ct-options-drawer {
+    top: 0;
+    height: 100vh;
+  }
+
   .ct-body {
     flex-direction: column;
   }
+
   .ct-b-main {
     margin-right: 0 !important;
   }
+
+  .ct-b-m-top {
+    padding: 12px 16px;
+    min-height: auto;
+    gap: 8px;
+  }
+
+  .ct-b-m-list {
+    padding: 14px 12px;
+  }
+
   .ct-b-complement {
     position: fixed;
-    top: 70px;
+    top: 60px;
     right: 0;
     width: 100%;
-    max-width: 340px;
-    height: calc(100vh - 70px);
+    max-width: 320px;
+    height: calc(100vh - 60px);
     border-left: 1px solid var(--line);
     box-shadow: var(--shadow);
-    z-index: 95;
+    z-index: 120;
   }
+
   .ct-stats {
     width: 100%;
+  }
+
+  /* Tarjetas móviles de Demon más compactas */
+  .demon-step {
+    min-height: auto;
+    padding: 10px 12px;
+    gap: 10px;
+  }
+
+  .demon-step-image {
+    height: 80px;
+    width: 80px;
+  }
+
+  .demon-step-image.has-video {
+    height: 80px;
+    width: 120px;
+  }
+
+  .demon-step-title {
+    font-size: 16px;
+  }
+
+  .demon-step-description {
+    font-size: 11.5px;
+    gap: 4px;
+  }
+
+  .demon-badge-diff {
+    font-size: 10.5px;
+    padding: 2px 5px;
+  }
+
+  .demon-badge-img {
+    width: 14px;
+    height: 14px;
+  }
+}
+
+@media (max-width: 520px) {
+  .ct-username {
+    display: none; /* Ocultar nombre en la cabecera en pantallas muy pequeñas */
+  }
+
+  .ct-top-title {
+    font-size: 24px;
+    width: 100%;
+  }
+
+  .ct-b-m-top {
+    flex-direction: row;
+    align-items: center;
+  }
+
+  #btnModeList {
+    margin-left: 0;
+  }
+
+  /* Modal responsive en móviles */
+  .box {
+    border-radius: var(--radius-md);
+  }
+
+  .box-row-split {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .chips-diff-row button {
+    height: 46px;
+  }
+
+  .chips-diff-row button img {
+    width: 40px;
+    height: 40px;
+  }
+
+  /* Reorganización de la tarjeta de Demon para celulares */
+  .demon-step {
+    flex-wrap: wrap;
+    padding-bottom: 12px;
+  }
+
+  .demon-step-options {
+    flex-direction: row;
+    width: 100%;
+    justify-content: flex-end;
+    border-top: 1px solid color-mix(in srgb, var(--line) 50%, transparent);
+    padding-top: 6px;
+    margin-top: 2px;
+  }
+
+  .btn-demon-add, .btn-demon-edit {
+    height: 30px;
+    width: 30px;
   }
 }
