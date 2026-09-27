@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark-blue" data-transparent="false">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/x-icon" href="logo.png">
+<title>My Demon List | Geometry Dash</title>
+
+<meta name="description" content="My Demon List: build, rank and share your own Geometry Dash Demon List. Track every Demon you've beaten, its difficulty, tier and attempts.">
+<meta name="keywords" content="Demon List, My Demon List, Demon, GD Demon List, Demon List tracker, GD levels, ranking">
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="My Demon List | Geometry Dash Demon">
+<meta property="og:description" content="Demon List, your own personalized Geometry Dash list.">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="fav_on.png">
+
+<meta name="theme-color" content="#373379">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="head-container">
+    <div class="ct-h-title" translate="no">My Demon List</div>
+    <div class="ct-h-version">version 1.0</div>
+    <div class="ct-h-main">
+      <button id="btnProfile" title="View Profile">
+      </button>
+      <div class="ct-username" id="headUsername">Username</div>
+    </div>
+  </header>
+
+  <div class="main-container">
+    <div class="options-overlay" id="optionsOverlay"></div>
+
+    <!-- Fixed sidebar options (collapsed version) -->
+    <aside class="ct-options">
+      <button class="opt-toggle-btn" id="btnToggleOpt" title="Options">⚙</button>
+    </aside>
+
+    <!-- Floating dropdown menu -->
+    <div class="ct-options-drawer" id="ctOptionsDrawer">
+      <div class="drawer-header">
+        <button class="drawer-close-btn" id="btnCloseDrawer" title="Close">⚙</button>
+        <span>Options Menu</span>
+      </div>
+      <button class="opt" id="btnConfig">Settings</button>
+      <div class="opt-divider"></div>
+      <button class="opt" id="btnExport">Export</button>
+      <button class="opt" id="btnImport">Import</button>
+      <input type="file" id="fileImport" accept=".json" hidden>
+    </div>
+
+    <main class="ct-body">
+      <section class="ct-b-main">
+        <div class="ct-b-m-top">
+          <div class="ct-top-title" id="rankingTitle"></div>
+          <button class="btn-demon-edit btn-title-edit" id="btnEditTitle" title="Edit title">✎</button>
+          <button id="btnModeList" title="Sort mode"></button>
+          <button id="btnFilter" title="Filter by difficulty">All</button>
+        </div>
+        <!-- Container where the Demon cards are inserted -->
+        <div class="ct-b-m-list" id="list"></div>
+      </section>
+
+      <!-- Sidebar panel for profile and stats -->
+      <aside class="ct-b-complement" id="statsPanel">
+        <div class="ct-stats">
+          <div class="ct-stats-1">
+            <img id="bodyImageProfile" alt="Profile">
+            <div class="ct-stats-1-2">
+              <div id="bodyUsername"></div>
+              <div id="bodyNickname"></div>
+            </div>
+          </div>
+          <div class="ct-stats-2">
+            <div class="ct-stats-box">
+              <span>Demons</span>
+              <b id="bodyTotalDemons">0</b>
+            </div>
+            <div class="ct-stats-box">
+              <span>Hardest</span>
+              <b id="bodyHardest">—</b>
+            </div>
+          </div>
+          <div class="ct-stats-3" id="statsDemons">
+            <!-- Icons and info per difficulty -->
+          </div>
+          <div id="bodyDescription"></div>
+        </div>
+      </aside>
+    </main>
+  </div>
+
+  <!-- =========================================================
+       BLOCK 9: POPUP MENUS AND MODAL WINDOWS (HTML)
+       ========================================================= -->
+  <div class="pop" id="menuMode">
+    <button data-m="custom">Custom</button>
+    <button data-m="asc">Tier (asc)</button>
+    <button data-m="desc">Tier (desc)</button>
+    <button data-m="att_asc">Attempts (asc)</button>
+    <button data-m="att_desc">Attempts (desc)</button>
+  </div>
+  <div class="pop" id="menuFilter"></div>
+
+  <div class="pop pop-config" id="menuConfig">
+    <div class="pop-title">Settings</div>
+    <button type="button" id="cfgBgImgBtn">Upload Image</button>
+    <input type="file" id="cfgBgFile" accept="image/*" hidden>
+    <button type="button" id="cfgBgReset">Reset Image</button>
+    <div class="pop-divider"></div>
+    <button type="button" id="cfgToggleTransparent">Transparency: Off</button>
+    <div class="pop-divider"></div>
+    <label>
+      Alignment :
+    </label>
+    <div class="chips-align" id="pAlign">
+      <button type="button" data-a="left">Left</button>
+      <button type="button" data-a="center">Center</button>
+      <button type="button" data-a="right">Right</button>
+    </div>
+    <div class="pop-divider"></div>
+    <label>
+      Preset Themes :
+    </label>
+    <div class="chips-theme" id="pTheme">
+      <button type="button" data-t="dark-blue"></button>
+      <button type="button" data-t="dark-pink"></button>
+      <button type="button" data-t="oled-blue"></button>
+      <button type="button" data-t="oled-pink"></button>
+      <button type="button" data-t="light-blue"></button>
+      <button type="button" data-t="light-pink"></button>
+      <button type="button" data-t="dark-white"></button>
+      <button type="button" data-t="light-black"></button>
+    </div>
+    <div class="pop-divider"></div>
+    <button type="button" class="pop-danger" id="cfgClearList">Clear List</button>
+    <button type="button" class="pop-danger" id="cfgClearStorage">Clear Local Data</button>
+  </div>
+
+  <!-- Edit / Add Demon modal -->
+  <div class="box-overlay" id="boxDemon">
+    <div class="box">
+      <h3 id="boxDemonTitle"></h3>
+      <div class="box-body">
+        <div class="avatar-row">
+          <div class="avatar-preview-container">
+            <img id="dImgPreview" class="demon-step-image" alt="Preview Demon">
+          </div>
+          <div class="avatar-controls">
+            <div class="url-fav-container">
+              <input type="text" id="dVideoUrl" placeholder="Video URL" spellcheck="false">
+              <button type="button" id="btnFavToggle" class="btn-fav-toggle" title="Favorite">
+                <img id="imgFavIcon" src="fav_off.png" alt="Favorite">
+              </button>
+            </div>
+            <button id="dImgReset" type="button" style="margin-top: 4px;">Default Icon</button>
+          </div>
+        </div>
+
+        <label>
+          Name :
+          <div class="autocomplete-container">
+            <input type="text" id="dName" maxlength="60" autocomplete="off" placeholder="e.g.: Bloodbath" spellcheck="false">
+            <div id="dNameAutocomplete" class="autocomplete-list"></div>
+          </div>
+        </label>
+
+        <label>
+          Difficulty :
+        </label>
+        <div class="chips-diff-row" id="dDiff"></div>
+
+        <div class="box-row-split">
+          <label>
+            Tier :
+            <input type="number" id="dTier" step="0.01" min="0" placeholder="e.g.: 1, 2.5 (optional)">
+          </label>
+          <label>
+            Attempts :
+            <input type="number" id="dAttempts" min="0" placeholder="e.g.: 500 (optional)">
+          </label>
+        </div>
+
+        <div class="err" id="dErr"></div>
+      </div>
+
+      <div class="box-foot">
+        <button class="mini-del" id="dDelete">Delete</button>
+        <button id="dCancel">Cancel</button>
+        <button class="pri" id="dSave"></button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Delete confirmation modal -->
+  <div class="box-overlay" id="boxConfirm">
+    <div class="box">
+      <h3>Delete Demon?</h3>
+      <div class="box-body">
+        <p id="cText"></p>
+      </div>
+      <div class="box-foot">
+        <button id="cNo">Cancel</button>
+        <button class="pri" id="cYes" style="background:var(--danger);border-color:var(--danger)">Delete</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Edit profile modal -->
+  <div class="box-overlay" id="boxProfile">
+    <div class="box">
+      <h3>Edit Profile</h3>
+      <div class="box-body">
+        <div class="avatar-row">
+          <div class="avatar-preview-container">
+            <img id="pImg" alt="Profile Picture">
+          </div>
+          <div class="avatar-controls">
+            <button id="pImgBtn" type="button">Upload</button>
+            <button id="pImgDel" type="button">Remove</button>
+            <input type="file" id="pFile" accept="image/*" hidden>
+          </div>
+        </div>
+
+        <label>
+          Username :
+          <input type="text" id="pName" maxlength="25" placeholder="Your username" spellcheck="false">
+        </label>
+
+        <label>
+          Nickname :
+          <input type="text" id="pNick" maxlength="25" placeholder="e.g.: Player1" spellcheck="false">
+        </label>
+
+        <label>
+          Bio :
+          <textarea id="pBio" rows="3" maxlength="220" style="resize:none" placeholder="Write something about yourself..." spellcheck="false"></textarea>
+        </label>
+
+        <div class="err" id="pErr"></div>
+      </div>
+
+      <div class="box-foot">
+        <button id="pCancel">Cancel</button>
+        <button class="pri" id="pSave">Save Changes</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Floating buttons -->
+  <button type="button" id="btnFloatingHelp" class="fab-bottom-left" title="Information">
+    <img class="demon-badge-img" src="cube.png" onerror="this.style.display='none';this.parentNode.innerHTML=''">
+  </button>
+  <button type="button" id="btnTogglePanel" class="fab-bottom-right" title="Toggle Panel">
+    <img class="demon-badge-img" src="stats.png" onerror="this.style.display='none';this.parentNode.innerHTML=''">
+  </button>
+  <button type="button" id="btnScrollTop" class="fab-scroll-top" title="Scroll to Top">
+    <img class="demon-badge-img" src="up.png" onerror="this.style.display='none';this.parentNode.innerHTML=''">
+  </button>
+
+  <!-- Info modal -->
+  <div id="boxFloatingMenu" class="box-floating-modal">
+    <div class="floating-modal-content">
+      <button type="button" id="btnCloseFloatingMenu" class="floating-modal-close">&times;</button>
+      <h3 class="floating-modal-title">My Demon List Tips <span>- by <a class="ig" target="_blank" href="https://www.instagram.com/gxbr_iel27/">ghabiel</a></span></h3>
+      <div class="floating-modal-body">
+        <p>
+          All data on this page is stored locally in your browser. Clearing your browser cache may cause data loss.<br><br>
+          To avoid this, use the <b>Export</b> and <b>Import</b> options in the settings menu. You can also share your list file with friends so they can view it.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- One-time Welcome Modal -->
+  <div id="boxWelcomeModal" class="box-floating-modal">
+    <div class="floating-modal-content welcome-modal-content">
+      <button type="button" id="btnCloseWelcomeModal" class="floating-modal-close">&times;</button>
+      <h3 class="floating-modal-title">Welcome to My Demon List</h3>
+      <div class="floating-modal-body">
+        <p>Here, you can easily and conveniently create your own <span>Demon List</span>.<br><br>
+Keep track of the Demons you have completed, record your attempt counts, and customize your profile to your liking in the options menu '⚙'.
+        </p>
+      </div>
+      <div style="display: flex; justify-content: center; margin-top: 18px;">
+        <button type="button" id="btnStartWelcome" style="background: var(--btn); color: var(--text-pri); padding: 8px 20px; border-radius: var(--radius-sm); font-weight: 600; cursor: pointer;">Get Started</button>
+      </div>
+    </div>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
